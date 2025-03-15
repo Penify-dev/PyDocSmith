@@ -6,10 +6,10 @@ build-backend = "poetry.core.masonry.api"
 name = "PyDocSmith"
 version = "0.15"
 description = "Parse Python docstrings in reST, Google and Numpydoc format"
-authors = ["Marcin Kurczewski <dash@wind.garden>"]
+authors = ["Suman Saurabh <ss.sumansaurabh92@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/SingularityX-ai/PyDocSmith"
+repository = "https://github.com/Penify-dev/PyDocSmith"
 classifiers = [
     "Environment :: Other Environment",
     "Development Status :: 4 - Beta",
