@@ -8,7 +8,7 @@ setup(
     long_description_content_type="text/markdown",
     author="Suman Saurabh",
     author_email="ss.sumansaurabh92@gmail.com",
-    url="https://github.com/SingularityX-ai/PyDocSmith",
+    url="https://github.com/Penify-dev/PyDocSmith",
     packages=find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
