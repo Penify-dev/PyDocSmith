@@ -1345,3 +1345,77 @@ def test_compose_expanded(source: str, expected: str) -> None:
         compose(parse(source), rendering_style=RenderingStyle.EXPANDED)
         == expected
     )
+
+
+def test_notes_section() -> None:
+    \"\"\"Test parsing Notes section in Google docstring.\"\"\"
+    docstring = parse(
+        \"\"\"\n        Initialize the model with provided parameters.\n\n        Args:\n            model_path (str): Path to the model.\n\n        Note:\n            This is a note about the function.\n\n        Note:\n            Another note here.\n        \"\"\"\n    )
+    assert docstring.short_description == \"Initialize the model with provided parameters.\"
+    assert len(docstring.params) == 1
+    assert docstring.notes is not None
+    assert len(docstring.notes) == 2
+    assert docstring.notes[0].description == \"This is a note about the function.\"
+    assert docstring.notes[1].description == \"Another note here.\"
+
+
+def test_examples_code() -> None:
+    \"\"\"Test parsing Examples section with code blocks.\"\"\"
+    docstring = parse(
+        \"\"\"\n        Multiply two numbers.\n\n        Args:\n            a (int): First number.\n            b (int): Second number.\n\n        Returns:\n            int: The product.\n\n        Examples:\n            >>> multiply(2, 3)\n            6\n            >>> multiply(4, 5)\n            20\n        \"\"\"\n    )
+    assert docstring.short_description == \"Multiply two numbers.\"
+    assert len(docstring.params) == 2
+    assert docstring.returns is not None
+    assert docstring.returns.type_name == \"int\"
+    assert len(docstring.examples) == 1
+    assert \"multiply(2, 3)\" in docstring.examples[0].description
+    assert \"6\" in docstring.examples[0].description
+
+
+def test_multiple_returns_detailed() -> None:
+    \"\"\"Test parsing multiple returns with detailed descriptions.\"\"\"
+    docstring = parse(
+        \"\"\"\n        Process data and return results.\n\n        Args:\n            data (dict): Input data.\n\n        Returns:\n            result1 (str): The first result.\n            result2 (int): The second result.\n        \"\"\"\n    )
+    assert docstring.short_description == \"Process data and return results.\"
+    assert len(docstring.params) == 1
+    assert docstring.many_returns is not None
+    assert len(docstring.many_returns) == 2
+    assert docstring.many_returns[0].arg_name == \"result1\"
+    assert docstring.many_returns[0].type_name == \"str\"
+    assert docstring.many_returns[1].arg_name == \"result2\"
+    assert docstring.many_returns[1].type_name == \"int\"
+
+
+def test_yields() -> None:
+    \"\"\"Test parsing Yields section.\"\"\"
+    docstring = parse(
+        \"\"\"\n        Generate numbers.\n\n        Yields:\n            int: The next number in sequence.\n        \"\"\"\n    )
+    assert docstring.short_description == \"Generate numbers.\"
+    assert docstring.returns is not None
+    assert docstring.returns.type_name == \"int\"
+    assert docstring.returns.description == \"The next number in sequence.\"
+
+
+def test_deprecated_params() -> None:
+    \"\"\"Test parsing deprecated parameters.\"\"\"
+    docstring = parse(
+        \"\"\"\n        Old function.\n\n        Args:\n            old_param (str, deprecated): This parameter is deprecated.\n            new_param (int): The new parameter.\n        \"\"\"\n    )
+    assert docstring.short_description == \"Old function.\"
+    assert len(docstring.params) == 2
+    assert docstring.params[0].arg_name == \"old_param\"
+    assert docstring.params[0].type_name == \"str\"
+    assert \"deprecated\" in docstring.params[0].description.lower()
+    assert docstring.params[1].arg_name == \"new_param\"
+    assert docstring.params[1].type_name == \"int\"
+
+
+def test_complex_types() -> None:
+    \"\"\"Test parsing complex type annotations.\"\"\"
+    docstring = parse(
+        \"\"\"\n        Complex function.\n\n        Args:\n            data (Union[List[Dict[str, Any]], None]): Complex data type.\n            callback (Callable[[int], str]): A callback function.\n\n        Returns:\n            Tuple[str, int]: A tuple result.\n        \"\"\"\n    )
+    assert docstring.short_description == \"Complex function.\"
+    assert len(docstring.params) == 2
+    assert docstring.params[0].type_name == \"Union[List[Dict[str, Any]], None]\"
+    assert docstring.params[1].type_name == \"Callable[[int], str]\"
+    assert docstring.returns is not None
+    assert docstring.returns.type_name == \"Tuple[str, int]\"
