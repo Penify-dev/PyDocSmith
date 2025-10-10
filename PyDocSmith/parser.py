@@ -32,6 +32,9 @@ def detect_docstring_style(docstring) -> DocstringStyle:
         str: The detected style ('REST', 'GOOGLE',
         'NUMPYDOC', 'EPYDOC', or 'UNKNOWN').
     """
+    if docstring is None:
+        return None
+        
     if "@param" in docstring or "@return" in docstring:
         return DocstringStyle.EPYDOC
     if (

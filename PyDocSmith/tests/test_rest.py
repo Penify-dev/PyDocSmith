@@ -378,7 +378,9 @@ def test_returns() -> None:
     assert docstring.returns.type_name is None
     assert docstring.returns.description == "self"
     assert not docstring.returns.is_generator
-    assert len(docstring.raises) == 0  # TODO: Fix this test case
+    assert len(docstring.raises) == 1  # Fixed: should be 1, not 0
+    assert docstring.raises[0].type_name is None
+    assert docstring.raises[0].description == "Any exceptions that may occur during the reset process."
 
 
 def test_yields() -> None:
