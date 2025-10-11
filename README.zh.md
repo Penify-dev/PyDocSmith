@@ -126,6 +126,87 @@ docstring_text = compose(parsed_docstring, style=DocstringStyle.GOOGLE)
 print(docstring_text)
 ```
 
+### 解析 Google 风格 Docstrings
+
+解析 Google 风格的 docstring:
+
+```python
+from PyDocSmith import parse, DocstringStyle
+
+docstring = """
+Short description.
+
+Long description.
+
+Args:
+    param1 (int): Description of param1
+    param2 (str, optional): Description of param2
+
+Returns:
+    int: Description of return value
+"""
+
+parsed = parse(docstring, style=DocstringStyle.GOOGLE)
+print(parsed)
+```
+
+### 解析 Epydoc 风格 Docstrings
+
+解析 Epydoc 风格的 docstring:
+
+```python
+from PyDocSmith import parse, DocstringStyle
+
+docstring = """
+Short description.
+
+@param param1: Description of param1
+@type param1: int
+@param param2: Description of param2
+@type param2: str
+@return: Description of return value
+@rtype: int
+"""
+
+parsed = parse(docstring, style=DocstringStyle.EPYDOC)
+print(parsed)
+```
+
+### 从类解析属性 Docstrings
+
+从包含属性 docstrings 的类解析 docstrings:
+
+```python
+from PyDocSmith import parse_from_object
+
+class ExampleClass:
+    """Class docstring."""
+
+    attr1: int
+    """Attribute 1 description."""
+
+    attr2: str = "default"
+    """Attribute 2 description."""
+
+    def method(self):
+        pass
+
+parsed = parse_from_object(ExampleClass)
+print(parsed)
+```
+
+### 使用自定义缩进进行组合
+
+使用自定义缩进组合 docstring:
+
+```python
+from PyDocSmith import compose, DocstringStyle
+
+# Assuming you have a parsed_docstring from previous examples
+docstring_text = compose(parsed_docstring, style=DocstringStyle.REST, indent=4)
+print(docstring_text)
+```
+
 ## 高级功能
 
 - **从对象解析：** PyDocSmith 可以直接从 Python 对象解析文档字符串，包括类和模块，将属性文档字符串纳入结构化表示。

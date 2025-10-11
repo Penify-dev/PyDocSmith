@@ -126,6 +126,87 @@ docstring_text = compose(parsed_docstring, style=DocstringStyle.GOOGLE)
 print(docstring_text)
 ```
 
+### Разбор Docstrings в стиле Google
+
+Разобрать docstring в стиле Google:
+
+```python
+from PyDocSmith import parse, DocstringStyle
+
+docstring = """
+Short description.
+
+Long description.
+
+Args:
+    param1 (int): Description of param1
+    param2 (str, optional): Description of param2
+
+Returns:
+    int: Description of return value
+"""
+
+parsed = parse(docstring, style=DocstringStyle.GOOGLE)
+print(parsed)
+```
+
+### Разбор Docstrings в стиле Epydoc
+
+Разобрать docstring в стиле Epydoc:
+
+```python
+from PyDocSmith import parse, DocstringStyle
+
+docstring = """
+Short description.
+
+@param param1: Description of param1
+@type param1: int
+@param param2: Description of param2
+@type param2: str
+@return: Description of return value
+@rtype: int
+"""
+
+parsed = parse(docstring, style=DocstringStyle.EPYDOC)
+print(parsed)
+```
+
+### Разбор Docstrings атрибутов из класса
+
+Разобрать docstrings из класса, включая docstrings атрибутов:
+
+```python
+from PyDocSmith import parse_from_object
+
+class ExampleClass:
+    """Class docstring."""
+
+    attr1: int
+    """Attribute 1 description."""
+
+    attr2: str = "default"
+    """Attribute 2 description."""
+
+    def method(self):
+        pass
+
+parsed = parse_from_object(ExampleClass)
+print(parsed)
+```
+
+### Составление с пользовательским отступом
+
+Составить docstring с пользовательским отступом:
+
+```python
+from PyDocSmith import compose, DocstringStyle
+
+# Assuming you have a parsed_docstring from previous examples
+docstring_text = compose(parsed_docstring, style=DocstringStyle.REST, indent=4)
+print(docstring_text)
+```
+
 ## Продвинутые особенности
 
 - **Анализ из объекта:** PyDocSmith может анализировать докстринги непосредственно из объектов Python, включая классы и модули, включая докстринги атрибутов в структурированное представление.

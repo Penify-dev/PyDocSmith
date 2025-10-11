@@ -126,6 +126,87 @@ docstring_text = compose(parsed_docstring, style=DocstringStyle.GOOGLE)
 print(docstring_text)
 ```
 
+### Google スタイル Docstrings の解析
+
+Google スタイルの docstring を解析します:
+
+```python
+from PyDocSmith import parse, DocstringStyle
+
+docstring = """
+Short description.
+
+Long description.
+
+Args:
+    param1 (int): Description of param1
+    param2 (str, optional): Description of param2
+
+Returns:
+    int: Description of return value
+"""
+
+parsed = parse(docstring, style=DocstringStyle.GOOGLE)
+print(parsed)
+```
+
+### Epydoc スタイル Docstrings の解析
+
+Epydoc スタイルの docstring を解析します:
+
+```python
+from PyDocSmith import parse, DocstringStyle
+
+docstring = """
+Short description.
+
+@param param1: Description of param1
+@type param1: int
+@param param2: Description of param2
+@type param2: str
+@return: Description of return value
+@rtype: int
+"""
+
+parsed = parse(docstring, style=DocstringStyle.EPYDOC)
+print(parsed)
+```
+
+### クラスからの属性 Docstrings の解析
+
+属性 docstrings を含むクラスから docstrings を解析します:
+
+```python
+from PyDocSmith import parse_from_object
+
+class ExampleClass:
+    """Class docstring."""
+
+    attr1: int
+    """Attribute 1 description."""
+
+    attr2: str = "default"
+    """Attribute 2 description."""
+
+    def method(self):
+        pass
+
+parsed = parse_from_object(ExampleClass)
+print(parsed)
+```
+
+### カスタムインデントでの構成
+
+カスタムインデントで docstring を構成します:
+
+```python
+from PyDocSmith import compose, DocstringStyle
+
+# Assuming you have a parsed_docstring from previous examples
+docstring_text = compose(parsed_docstring, style=DocstringStyle.REST, indent=4)
+print(docstring_text)
+```
+
 ## 高度な機能
 
 - **オブジェクトからの解析：** PyDocSmith は、クラスやモジュールを含む Python オブジェクトから直接ドックストリングを解析でき、属性ドックストリングを構造化表現に組み込みます。

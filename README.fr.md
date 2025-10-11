@@ -126,6 +126,87 @@ docstring_text = compose(parsed_docstring, style=DocstringStyle.GOOGLE)
 print(docstring_text)
 ```
 
+### Analyse des Docstrings de Style Google
+
+Analyser une docstring de style Google:
+
+```python
+from PyDocSmith import parse, DocstringStyle
+
+docstring = """
+Short description.
+
+Long description.
+
+Args:
+    param1 (int): Description of param1
+    param2 (str, optional): Description of param2
+
+Returns:
+    int: Description of return value
+"""
+
+parsed = parse(docstring, style=DocstringStyle.GOOGLE)
+print(parsed)
+```
+
+### Analyse des Docstrings de Style Epydoc
+
+Analyser une docstring de style Epydoc:
+
+```python
+from PyDocSmith import parse, DocstringStyle
+
+docstring = """
+Short description.
+
+@param param1: Description of param1
+@type param1: int
+@param param2: Description of param2
+@type param2: str
+@return: Description of return value
+@rtype: int
+"""
+
+parsed = parse(docstring, style=DocstringStyle.EPYDOC)
+print(parsed)
+```
+
+### Analyse des Docstrings d'Attributs depuis une Classe
+
+Analyser les docstrings depuis une classe incluant les docstrings d'attributs:
+
+```python
+from PyDocSmith import parse_from_object
+
+class ExampleClass:
+    """Class docstring."""
+
+    attr1: int
+    """Attribute 1 description."""
+
+    attr2: str = "default"
+    """Attribute 2 description."""
+
+    def method(self):
+        pass
+
+parsed = parse_from_object(ExampleClass)
+print(parsed)
+```
+
+### Composition avec Indentation Personnalisée
+
+Composer une docstring avec une indentation personnalisée:
+
+```python
+from PyDocSmith import compose, DocstringStyle
+
+# Assuming you have a parsed_docstring from previous examples
+docstring_text = compose(parsed_docstring, style=DocstringStyle.REST, indent=4)
+print(docstring_text)
+```
+
 ## Fonctionnalités avancées
 
 - **Analyser depuis l'objet :** PyDocSmith peut analyser les docstrings directement depuis les objets Python, y compris les classes et les modules, en incorporant les docstrings d'attributs dans la représentation structurée.

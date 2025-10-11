@@ -126,6 +126,87 @@ docstring_text = compose(parsed_docstring, style=DocstringStyle.GOOGLE)
 print(docstring_text)
 ```
 
+### Parsing Google Style Docstrings
+
+Parse a Google-style docstring:
+
+```python
+from PyDocSmith import parse, DocstringStyle
+
+docstring = """
+Short description.
+
+Long description.
+
+Args:
+    param1 (int): Description of param1
+    param2 (str, optional): Description of param2
+
+Returns:
+    int: Description of return value
+"""
+
+parsed = parse(docstring, style=DocstringStyle.GOOGLE)
+print(parsed)
+```
+
+### Parsing Epydoc Style Docstrings
+
+Parse an Epydoc-style docstring:
+
+```python
+from PyDocSmith import parse, DocstringStyle
+
+docstring = """
+Short description.
+
+@param param1: Description of param1
+@type param1: int
+@param param2: Description of param2
+@type param2: str
+@return: Description of return value
+@rtype: int
+"""
+
+parsed = parse(docstring, style=DocstringStyle.EPYDOC)
+print(parsed)
+```
+
+### Parsing Attribute Docstrings from a Class
+
+Parse docstrings from a class including attribute docstrings:
+
+```python
+from PyDocSmith import parse_from_object
+
+class ExampleClass:
+    """Class docstring."""
+
+    attr1: int
+    """Attribute 1 description."""
+
+    attr2: str = "default"
+    """Attribute 2 description."""
+
+    def method(self):
+        pass
+
+parsed = parse_from_object(ExampleClass)
+print(parsed)
+```
+
+### Composing with Custom Indentation
+
+Compose a docstring with custom indentation:
+
+```python
+from PyDocSmith import compose, DocstringStyle
+
+# Assuming you have a parsed_docstring from previous examples
+docstring_text = compose(parsed_docstring, style=DocstringStyle.REST, indent=4)
+print(docstring_text)
+```
+
 ## Advanced Features
 
 - **Parse From Object:** PyDocSmith can parse docstrings directly from Python objects, including classes and modules, incorporating attribute docstrings into the structured representation.
