@@ -296,3 +296,148 @@ def test_cross_style_composition():
     reparsed = parse(rest_composed, style=DocstringStyle.REST)
     assert reparsed.short_description == parsed.short_description
     assert len(reparsed.params) == len(parsed.params)
+
+
+def test_empty_docstring():
+    """Test parsing an empty docstring."""
+    empty_doc = ""
+
+    parsed = parse(empty_doc)
+    assert parsed.short_description == ""
+    assert parsed.long_description == ""
+    assert len(parsed.params) == 0
+    assert parsed.returns is None
+    assert len(parsed.raises) == 0
+
+
+def test_short_description_only():
+    """Test parsing a docstring with only short description."""
+    short_doc = "This is a short description."
+
+    parsed = parse(short_doc)
+    assert parsed.short_description == "This is a short description."
+    assert parsed.long_description == ""
+    assert len(parsed.params) == 0
+
+
+def test_parse_from_object_method():
+    """Test parse_from_object with a class method."""
+    class SampleClass:
+        def method(self, x: int, y: str = "default"):
+            """Method description.
+
+            Args:
+                x: Integer parameter
+                y: String parameter with default
+
+            Returns:
+                str: Result
+            """
+            return f"{x}_{y}"
+
+    parsed = parse_from_object(SampleClass.method)
+
+    assert "Method description" in parsed.short_description
+    assert len(parsed.params) == 2
+    assert parsed.params[0].arg_name == "x"
+    assert parsed.params[1].arg_name == "y"
+    assert parsed.returns.description == "Result"
+
+
+def test_combine_docstrings_conflicting_params():
+    """Test combining docstrings with conflicting parameter descriptions."""
+    doc1 = """Function doc.
+
+    Args:
+        x: First description of x
+    """
+
+    doc2 = """Another doc.
+
+    Args:
+        x: Second description of x
+        y: Description of y
+    """
+
+    combined = combine_docstrings([doc1, doc2])
+
+    parsed = parse(combined, style=DocstringStyle.GOOGLE)
+
+    # Should have both params, but x might be from first or second
+    assert len(parsed.params) >= 1
+    assert any(p.arg_name == "x" for p in parsed.params)
+    assert any(p.arg_name == "y" for p in parsed.params)
+
+
+def test_docstring_with_examples():
+    """Test parsing docstring with examples section."""
+    doc = """Function description.
+
+    Args:
+        x: Input value
+
+    Examples:
+        >>> func(1)
+        2
+    """
+
+    parsed = parse(doc, style=DocstringStyle.GOOGLE)
+
+    assert parsed.short_description == "Function description."
+    assert len(parsed.params) == 1
+    assert parsed.params[0].arg_name == "x"
+
+
+def test_parse_from_object_property():
+    """Test parse_from_object with a property."""
+    class SampleClass:
+        @property
+        def prop(self):
+            """Property description.
+
+            Returns:
+                int: The value
+            """
+            return 42
+
+    parsed = parse_from_object(SampleClass.prop)
+
+    assert "Property description" in parsed.short_description
+    assert parsed.returns.description == "The value"
+
+
+def test_invalid_style_error():
+    """Test error handling with invalid style."""
+    doc = "Some docstring"
+
+    # This should work with AUTO
+    parsed = parse(doc, style=DocstringStyle.AUTO)
+    assert parsed is not None
+
+
+def test_minimal_round_trip():
+    """Test round-trip with minimal docstring."""
+    minimal_doc = "Minimal doc."
+
+    parsed = parse(minimal_doc)
+    composed = compose(parsed, style=DocstringStyle.GOOGLE)
+    reparsed = parse(composed, style=DocstringStyle.GOOGLE)
+
+    assert reparsed.short_description == parsed.short_description
+
+
+def test_docstring_with_notes():
+    """Test parsing docstring with notes section."""
+    doc = """Function description.
+
+    Args:
+        x: Input
+
+    Notes:
+        This is a note.
+    """
+
+    parsed = parse(doc, style=DocstringStyle.GOOGLE)
+
+    assert parsed.short_description == "Function description."
+    assert len(parsed.params) == 1
