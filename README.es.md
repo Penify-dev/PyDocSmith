@@ -64,12 +64,4 @@ print(docstring_text)
 - **Analizar desde objeto:** PyDocSmith puede analizar docstrings directamente desde objetos Python, incluyendo clases y módulos, incorporando docstrings de atributos en la representación estructurada.
 - **Estilos de renderizado personalizados:** Personalizar el renderizado de docstrings con estilos compactos o detallados, y especificar indentación personalizada para el texto de docstring generado.
 
-## Cosas que han sido modificadas con respecto a docstring_parser
-
-1. Mejores heurísticas para detectar el estilo de docstring
-2. Google Docstring ha sido modificado para acomodar Notas, Ejemplos
-3. A veces GoogleDoc string no tiene la indentación correcta, especialmente cuando se genera desde LLMs como GPT o Mistral. PyDocSmith puede corregir esas malas docstrings.
-4. Casos de prueba adicionales fueron añadidos para acomodar un estilo diferente de GoogleDocstring
-
-He actualizado esto basado en el caso de uso para - https://www.penify.dev
 

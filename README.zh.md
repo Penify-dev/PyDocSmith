@@ -64,12 +64,4 @@ print(docstring_text)
 - **从对象解析：** PyDocSmith 可以直接从 Python 对象解析文档字符串，包括类和模块，将属性文档字符串纳入结构化表示。
 - **自定义渲染风格：** 使用紧凑或详细风格自定义文档字符串的渲染，并为生成的文档字符串文本指定自定义缩进。
 
-## 与 docstring_parser 相比修改的事项
-
-1. 更好的启发式来检测文档字符串风格
-2. Google Docstring 已修改以适应 Notes、Examples
-3. 有时 GoogleDoc string 没有正确的缩进，特别是当从 LLMs 如 GPT 或 Mistral 生成时。PyDocSmith 可以修复这些坏的文档字符串。
-4. 添加了额外的测试案例以适应不同的 GoogleDocstring 风格
-
-我基于使用案例更新了这个 - https://www.penify.dev
 
