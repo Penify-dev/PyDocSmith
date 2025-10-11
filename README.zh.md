@@ -73,6 +73,3 @@ print(docstring_text)
 
 我基于使用案例更新了这个 - https://www.penify.dev
 
-## 贡献
-
-欢迎贡献！请在项目的 GitHub 页面提交拉取请求或报告问题。

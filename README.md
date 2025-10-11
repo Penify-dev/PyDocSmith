@@ -73,7 +73,4 @@ print(docstring_text)
 
 I have updated it based on use case for - https://www.penify.dev
 
-## Contributing
-
-Contributions are welcome! Please submit pull requests or report issues on the project's GitHub page.
 
