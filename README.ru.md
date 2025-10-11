@@ -59,6 +59,73 @@ docstring_text = compose(parsed_docstring, style=DocstringStyle.REST)
 print(docstring_text)
 ```
 
+## Дополнительные примеры
+
+### Парсинг Docstring в стиле NumPy
+
+Разобрать docstring в стиле NumPy:
+
+```python
+from PyDocSmith import parse, DocstringStyle
+
+docstring = """
+Short description
+
+Long description
+
+Parameters
+----------
+param1 : int
+    Description of param1
+param2 : str, optional
+    Description of param2
+
+Returns
+-------
+int
+    Description of return value
+"""
+
+parsed = parse(docstring, style=DocstringStyle.NUMPYDOC)
+print(parsed)
+```
+
+### Парсинг из объектов Python
+
+Разобрать docstring напрямую из функций или классов Python:
+
+```python
+from PyDocSmith import parse_from_object
+
+def example_function(param1: int, param2: str = "default") -> int:
+    """
+    This is an example function.
+
+    Args:
+        param1 (int): First parameter
+        param2 (str): Second parameter
+
+    Returns:
+        int: The result
+    """
+    return param1 + len(param2)
+
+parsed = parse_from_object(example_function)
+print(parsed)
+```
+
+### Составление с разными стилями
+
+Составить docstring в стиле, отличном от того, в котором он был проанализирован:
+
+```python
+from PyDocSmith import compose, DocstringStyle
+
+# Assuming you have a parsed_docstring from previous examples
+docstring_text = compose(parsed_docstring, style=DocstringStyle.GOOGLE)
+print(docstring_text)
+```
+
 ## Продвинутые особенности
 
 - **Анализ из объекта:** PyDocSmith может анализировать докстринги непосредственно из объектов Python, включая классы и модули, включая докстринги атрибутов в структурированное представление.

@@ -59,6 +59,73 @@ docstring_text = compose(parsed_docstring, style=DocstringStyle.REST)
 print(docstring_text)
 ```
 
+## More Examples
+
+### Parsing NumPy Style Docstrings
+
+Parse a NumPy-style docstring:
+
+```python
+from PyDocSmith import parse, DocstringStyle
+
+docstring = """
+Short description
+
+Long description
+
+Parameters
+----------
+param1 : int
+    Description of param1
+param2 : str, optional
+    Description of param2
+
+Returns
+-------
+int
+    Description of return value
+"""
+
+parsed = parse(docstring, style=DocstringStyle.NUMPYDOC)
+print(parsed)
+```
+
+### Parsing from Python Objects
+
+Parse docstrings directly from Python functions or classes:
+
+```python
+from PyDocSmith import parse_from_object
+
+def example_function(param1: int, param2: str = "default") -> int:
+    """
+    This is an example function.
+
+    Args:
+        param1 (int): First parameter
+        param2 (str): Second parameter
+
+    Returns:
+        int: The result
+    """
+    return param1 + len(param2)
+
+parsed = parse_from_object(example_function)
+print(parsed)
+```
+
+### Composing with Different Styles
+
+Compose a docstring in a different style than it was parsed from:
+
+```python
+from PyDocSmith import compose, DocstringStyle
+
+# Assuming you have a parsed_docstring from previous examples
+docstring_text = compose(parsed_docstring, style=DocstringStyle.GOOGLE)
+print(docstring_text)
+```
+
 ## Advanced Features
 
 - **Parse From Object:** PyDocSmith can parse docstrings directly from Python objects, including classes and modules, incorporating attribute docstrings into the structured representation.

@@ -59,6 +59,73 @@ docstring_text = compose(parsed_docstring, style=DocstringStyle.REST)
 print(docstring_text)
 ```
 
+## 更多示例
+
+### 解析 NumPy 风格的 Docstring
+
+解析 NumPy 风格的 docstring:
+
+```python
+from PyDocSmith import parse, DocstringStyle
+
+docstring = """
+Short description
+
+Long description
+
+Parameters
+----------
+param1 : int
+    Description of param1
+param2 : str, optional
+    Description of param2
+
+Returns
+-------
+int
+    Description of return value
+"""
+
+parsed = parse(docstring, style=DocstringStyle.NUMPYDOC)
+print(parsed)
+```
+
+### 从 Python 对象解析
+
+直接从 Python 函数或类解析 docstring:
+
+```python
+from PyDocSmith import parse_from_object
+
+def example_function(param1: int, param2: str = "default") -> int:
+    """
+    This is an example function.
+
+    Args:
+        param1 (int): First parameter
+        param2 (str): Second parameter
+
+    Returns:
+        int: The result
+    """
+    return param1 + len(param2)
+
+parsed = parse_from_object(example_function)
+print(parsed)
+```
+
+### 使用不同风格组合
+
+以不同于解析的风格组合 docstring:
+
+```python
+from PyDocSmith import compose, DocstringStyle
+
+# Assuming you have a parsed_docstring from previous examples
+docstring_text = compose(parsed_docstring, style=DocstringStyle.GOOGLE)
+print(docstring_text)
+```
+
 ## 高级功能
 
 - **从对象解析：** PyDocSmith 可以直接从 Python 对象解析文档字符串，包括类和模块，将属性文档字符串纳入结构化表示。

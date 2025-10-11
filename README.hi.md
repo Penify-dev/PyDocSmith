@@ -59,6 +59,73 @@ docstring_text = compose(parsed_docstring, style=DocstringStyle.REST)
 print(docstring_text)
 ```
 
+## अधिक उदाहरण
+
+### NumPy शैली Docstrings का पार्सिंग
+
+NumPy-शैली docstring को पार्स करें:
+
+```python
+from PyDocSmith import parse, DocstringStyle
+
+docstring = """
+Short description
+
+Long description
+
+Parameters
+----------
+param1 : int
+    Description of param1
+param2 : str, optional
+    Description of param2
+
+Returns
+-------
+int
+    Description of return value
+"""
+
+parsed = parse(docstring, style=DocstringStyle.NUMPYDOC)
+print(parsed)
+```
+
+### Python ऑब्जेक्ट्स से पार्सिंग
+
+Python कार्यों या कक्षाओं से सीधे docstrings को पार्स करें:
+
+```python
+from PyDocSmith import parse_from_object
+
+def example_function(param1: int, param2: str = "default") -> int:
+    """
+    This is an example function.
+
+    Args:
+        param1 (int): First parameter
+        param2 (str): Second parameter
+
+    Returns:
+        int: The result
+    """
+    return param1 + len(param2)
+
+parsed = parse_from_object(example_function)
+print(parsed)
+```
+
+### विभिन्न शैलियों के साथ कम्पोज़िंग
+
+विश्लेषित किए गए शैली से अलग शैली में docstring को कम्पोज़ करें:
+
+```python
+from PyDocSmith import compose, DocstringStyle
+
+# Assuming you have a parsed_docstring from previous examples
+docstring_text = compose(parsed_docstring, style=DocstringStyle.GOOGLE)
+print(docstring_text)
+```
+
 ## उन्नत विशेषताएं
 
 - **ऑब्जेक्ट से पार्स करें:** PyDocSmith Python ऑब्जेक्ट्स से सीधे डॉकस्ट्रिंग पार्स कर सकता है, जिसमें क्लासेस और मॉड्यूल्स शामिल हैं, एट्रिब्यूट डॉकस्ट्रिंग को संरचित प्रतिनिधित्व में शामिल करते हुए।
