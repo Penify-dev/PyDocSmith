@@ -59,6 +59,63 @@ docstring_text = compose(parsed_docstring, style=DocstringStyle.REST)
 print(docstring_text)
 ```
 
+### 解析带有 Notes 和 Examples 的 Google Docstring
+
+检测包含 Notes 和 Examples 的给定文本的 docstring 样式：
+
+```python
+from PyDocSmith import parse, DocstringStyle
+
+docstring = """
+这个函数做了一些事情。
+
+Args:
+    param1 (str): param1 的描述
+
+Returns:
+    str: 返回值的描述
+
+Notes:
+    这是一个注释。
+
+Examples:
+    >>> func('hello')
+    'hello world'
+"""
+
+parsed = parse(docstring, style=DocstringStyle.GOOGLE)
+print(parsed)
+```
+
+### 从对象解析 Docstrings
+
+从 Python 对象解析 docstrings：
+
+```python
+from PyDocSmith import parse_from_object
+
+class MyClass:
+    """这是一个类 docstring。"""
+
+    attr: str
+    """这是一个属性 docstring。"""
+
+parsed = parse_from_object(MyClass)
+print(parsed)
+```
+
+### 使用自定义缩进编写 Docstrings
+
+使用自定义缩进渲染解析的 docstring：
+
+```python
+from PyDocSmith import compose
+
+# 假设 parsed_docstring 可用
+docstring_text = compose(parsed_docstring, style=DocstringStyle.GOOGLE, indent='    ')
+print(docstring_text)
+```
+
 ## 高级功能
 
 - **从对象解析：** PyDocSmith 可以直接从 Python 对象解析 docstrings，包括类和模块，将属性 docstrings 纳入结构化表示。

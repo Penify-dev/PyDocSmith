@@ -59,6 +59,63 @@ docstring_text = compose(parsed_docstring, style=DocstringStyle.REST)
 print(docstring_text)
 ```
 
+### Análisis de docstring de Google con Notas y Ejemplos
+
+Detecta el estilo de docstring de un texto dado que contiene Notas y Ejemplos:
+
+```python
+from PyDocSmith import parse, DocstringStyle
+
+docstring = """
+Esta función hace algo.
+
+Args:
+    param1 (str): Descripción de param1
+
+Returns:
+    str: Descripción del valor de retorno
+
+Notes:
+    Esta es una nota.
+
+Examples:
+    >>> func('hello')
+    'hello world'
+"""
+
+parsed = parse(docstring, style=DocstringStyle.GOOGLE)
+print(parsed)
+```
+
+### Análisis de docstrings desde un objeto
+
+Analiza docstrings desde objetos Python:
+
+```python
+from PyDocSmith import parse_from_object
+
+class MyClass:
+    """Esta es una docstring de clase."""
+
+    attr: str
+    """Esta es una docstring de atributo."""
+
+parsed = parse_from_object(MyClass)
+print(parsed)
+```
+
+### Composición de docstrings con indentación personalizada
+
+Renderiza una docstring analizada con indentación personalizada:
+
+```python
+from PyDocSmith import compose
+
+# Asumiendo que parsed_docstring está disponible
+docstring_text = compose(parsed_docstring, style=DocstringStyle.GOOGLE, indent='    ')
+print(docstring_text)
+```
+
 ## Características avanzadas
 
 - **Analizar desde objeto:** PyDocSmith puede analizar docstrings directamente desde objetos Python, incluyendo clases y módulos, incorporando docstrings de atributos en la representación estructurada.

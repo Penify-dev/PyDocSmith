@@ -59,6 +59,63 @@ docstring_text = compose(parsed_docstring, style=DocstringStyle.REST)
 print(docstring_text)
 ```
 
+### Google Docstring के साथ Notes और Examples पार्स करना
+
+दिए गए टेक्स्ट की docstring शैली का पता लगाएं जिसमें Notes और Examples हैं:
+
+```python
+from PyDocSmith import parse, DocstringStyle
+
+docstring = """
+यह फ़ंक्शन कुछ करता है।
+
+Args:
+    param1 (str): param1 का विवरण
+
+Returns:
+    str: वापसी मूल्य का विवरण
+
+Notes:
+    यह एक नोट है।
+
+Examples:
+    >>> func('hello')
+    'hello world'
+"""
+
+parsed = parse(docstring, style=DocstringStyle.GOOGLE)
+print(parsed)
+```
+
+### ऑब्जेक्ट से Docstrings पार्स करना
+
+Python ऑब्जेक्ट से docstrings पार्स करें:
+
+```python
+from PyDocSmith import parse_from_object
+
+class MyClass:
+    """यह एक कक्षा docstring है।"""
+
+    attr: str
+    """यह एक विशेषता docstring है।"""
+
+parsed = parse_from_object(MyClass)
+print(parsed)
+```
+
+### कस्टम इंडेंटेशन के साथ Docstrings का निर्माण
+
+कस्टम इंडेंटेशन के साथ एक पार्स किए गए docstring को रेंडर करें:
+
+```python
+from PyDocSmith import compose
+
+# मान लें कि parsed_docstring उपलब्ध है
+docstring_text = compose(parsed_docstring, style=DocstringStyle.GOOGLE, indent='    ')
+print(docstring_text)
+```
+
 ## उन्नत विशेषताएं
 
 - **ऑब्जेक्ट से पार्स करें:** PyDocSmith Python ऑब्जेक्ट्स से सीधे docstrings को पार्स कर सकता है, जिसमें कक्षाएं और मॉड्यूल शामिल हैं, संरचित प्रतिनिधित्व में विशेषता docstrings को शामिल करते हुए।
