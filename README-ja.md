@@ -71,8 +71,6 @@ print(docstring_text)
 3. 時々 GoogleDoc string は適切なインデントを持たない、特に LLMs のような GPT や Mistral から生成された場合。PyDocSmith はこれらの悪い docstrings を修正できます。
 4. 異なるスタイルの GoogleDocstring を収容するために追加のテストケースが追加されました
 
-私は使用ケースに基づいてこれを更新しました - https://www.penify.dev
-
 ## 貢献
 
 貢献は歓迎されます！プロジェクトの GitHub ページでプルリクエストを送信するか、問題を報告してください。

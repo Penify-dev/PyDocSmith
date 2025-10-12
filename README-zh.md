@@ -71,8 +71,6 @@ print(docstring_text)
 3. 有时 GoogleDoc string 没有正确的缩进，特别是当从 LLMs 如 GPT 或 Mistral 生成时。PyDocSmith 可以修复这些错误的 docstrings。
 4. 添加了额外的测试案例以容纳不同的 GoogleDocstring 样式
 
-我基于使用案例更新了它 - https://www.penify.dev
-
 ## 贡献
 
 欢迎贡献！请在项目的 GitHub 页面上提交拉取请求或报告问题。
